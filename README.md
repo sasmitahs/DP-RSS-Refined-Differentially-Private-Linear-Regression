@@ -32,7 +32,8 @@ dp-rss/
 │   ├── metrics.py       # L1 / L2 error (Eqs. 1, 2, 11, 12)
 │   └── data.py          # Synthetic data generation
 ├── examples/
-│   ├── quickstart.py    # Minimal usage example
+│   ├── quickstart.py       # Minimal usage example
+│   ├── general_bounds.py   # General bounded data (Appendix A)
 │   └── reproduce_paper.py  # Reproduce Figure 1
 ├── tests/
 │   └── test_dp_rss.py   # Unit tests
@@ -44,7 +45,7 @@ dp-rss/
 ## Installation
 
 ```bash
-git clone https://github.com/sasmitahs/dp-rss.git
+git clone https://github.com/YOUR-USERNAME/dp-rss.git
 cd dp-rss
 pip install -e .
 ```
@@ -72,15 +73,33 @@ mse = l2_error_exact(0.5, 0.2, alpha_hat, beta_hat)
 print(f"MSE = {mse:.6f}")
 ```
 
-### General Bounded Data
+### General Bounded Data (Appendix A)
 
-For data in arbitrary rectangles (see Appendix A in the paper):
+The core algorithm assumes data in [0, 1]². For data in a general rectangle [x_min, x_max] × [y_min, y_max], DP-RSS applies a linear normalisation internally:
 
-```python
-result = dp_rss(x, y, epsilon=1.0, x_bounds=(10, 50), y_bounds=(0, 100))
+```
+x' = (x - x_min) / (x_max - x_min)
+y' = (y - y_min) / (y_max - y_min)
 ```
 
-Data is normalised to [0, 1]² internally; returned parameters are on the original scale.
+It then runs Algorithm 3 on the normalised data to obtain (α̂', β̂'), and maps back to the original scale:
+
+```
+α̂ = (Δy / Δx) · α̂'
+β̂ = y_min + Δy · (β̂' − (x_min / Δx) · α̂')
+```
+
+where Δx = x_max − x_min and Δy = y_max − y_min.
+
+**Usage — just pass the bounds:**
+
+```python
+# Data with x ∈ [20, 80], y ∈ [0, 250]
+result = dp_rss(x, y, epsilon=1.0, x_bounds=(20, 80), y_bounds=(0, 250))
+alpha_hat, beta_hat = result  # parameters on the original scale
+```
+
+See [`examples/general_bounds.py`](examples/general_bounds.py) for a full working example.
 
 ## API
 
