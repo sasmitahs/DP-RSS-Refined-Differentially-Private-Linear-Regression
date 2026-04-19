@@ -125,10 +125,10 @@ l2_error_exact(true_slope, true_intercept, pred_slope, pred_intercept) # Eq. 12
 ## Reproducing Paper Results
 
 ```bash
-# Full run (1000 iterations, ~30 min)
+# Full run (1000 iterations)
 python examples/reproduce_paper.py
 
-# Quick check (50 iterations, ~2 min)
+# Quick check (50 iterations)
 python examples/reproduce_paper.py --iterations 50
 
 # Single setup
