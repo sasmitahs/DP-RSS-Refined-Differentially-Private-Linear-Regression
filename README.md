@@ -122,24 +122,6 @@ l1_error(true_slope, true_intercept, pred_slope, pred_intercept)       # Eq. 11
 l2_error_exact(true_slope, true_intercept, pred_slope, pred_intercept) # Eq. 12
 ```
 
-## Reproducing Paper Results
-
-```bash
-# Full run (1000 iterations)
-python examples/reproduce_paper.py
-
-# Quick check (50 iterations)
-python examples/reproduce_paper.py --iterations 50
-
-# Single setup
-python examples/reproduce_paper.py --setup 1
-```
-
-## Tests
-
-```bash
-pytest tests/ -v
-```
 
 ## Citation
 
