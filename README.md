@@ -45,8 +45,8 @@ dp-rss/
 ## Installation
 
 ```bash
-git clone https://github.com/sasmitahs/dp-rss.git
-cd dp-rss
+git clone https://github.com/sasmitahs/DP-RSS-Refined-Differentially-Private-Linear-Regression.git
+cd DP-RSS-Refined-Differentially-Private-Linear-Regression
 pip install -e .
 ```
 
